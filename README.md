@@ -21,5 +21,6 @@ NewsAPI, <https://newsapi.org/>
 
 ## Приблизительная схема модулей ##
 
-![ModuleScheme](https://user-images.githubusercontent.com/104722036/218265627-976135a8-3838-41a1-a9c1-7aff47a77533.png)
+![ModuleScheme](https://user-images.githubusercontent.com/104722036/218265937-9c8f243a-5627-40c6-9d37-c96e8bc5906d.png)
+
 
