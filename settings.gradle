@@ -14,3 +14,13 @@ dependencyResolutionManagement {
 }
 rootProject.name = "NewsDemo"
 include ':app'
+include ':feature_news_list'
+include ':feature_news_details'
+include ':feature_favorites'
+include ':feature_news_list_api'
+include ':feature_news_details_api'
+include ':feature_favorites_api'
+include ':core'
+include ':core_impl'
+include ':core_api'
+include ':features_shared'
