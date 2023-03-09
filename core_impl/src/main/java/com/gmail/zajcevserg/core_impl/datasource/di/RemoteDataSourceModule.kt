@@ -2,13 +2,13 @@ package com.gmail.zajcevserg.core_impl.datasource.di
 
 import com.gmail.zajcevserg.core_api.datasource.remote.NewsRemoteDataSource
 import com.gmail.zajcevserg.core_impl.BuildConfig
+import com.gmail.zajcevserg.core_impl.datasource.remote.AuthorizationInterceptor
+import com.gmail.zajcevserg.core_impl.datasource.remote.NewsApiService
 import com.gmail.zajcevserg.core_impl.datasource.remote.NewsRemoteDataSourceImpl
-import com.gmail.zajcevserg.core_impl.datasource.remote.NewsService
 import dagger.Binds
 import dagger.Module
 import dagger.Provides
 import okhttp3.OkHttpClient
-import okhttp3.Request
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
@@ -29,32 +29,30 @@ interface RemoteDataSourceModule {
         }
         @Singleton
         @Provides
-        fun providesOkHttpClient(loggingInterceptor: HttpLoggingInterceptor): OkHttpClient {
+        fun providesOkHttpClient(
+            loggingInterceptor: HttpLoggingInterceptor
+        ): OkHttpClient {
             return OkHttpClient.Builder()
                 .addInterceptor(loggingInterceptor)
-                .addInterceptor {
-                    val originalRequest: Request = it.request()
-                    val request = originalRequest.newBuilder()
-                        .header("Authorization", "7fa5fc07bf62441e94165374234ab6e4")
-                        .build()
-                    it.proceed(request)
-                }.build()
+                .addInterceptor(AuthorizationInterceptor)
+                .build()
         }
+
         @Singleton
         @Provides
-        fun createLoginInterceptor(): HttpLoggingInterceptor {
-            val interceptor = HttpLoggingInterceptor()
-            interceptor.setLevel(
-                if (BuildConfig.DEBUG)
-                    HttpLoggingInterceptor.Level.BODY
-                else HttpLoggingInterceptor.Level.NONE
-            )
-            return interceptor
+        fun provideLoginInterceptor(): HttpLoggingInterceptor {
+            return HttpLoggingInterceptor().apply {
+                setLevel(
+                    if (BuildConfig.DEBUG) HttpLoggingInterceptor.Level.BODY
+                    else HttpLoggingInterceptor.Level.NONE
+                )
+            }
         }
+
         @Singleton
         @Provides
-        fun provideNewsService(retrofit: Retrofit): NewsService {
-            return retrofit.create(NewsService::class.java)
+        fun provideNewsService(retrofit: Retrofit): NewsApiService {
+            return retrofit.create(NewsApiService::class.java)
         }
     }
     @Binds

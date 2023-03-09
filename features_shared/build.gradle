@@ -33,13 +33,7 @@ android {
 
 dependencies {
 
-    implementation project(path: ':core_api')
-
     implementation 'androidx.core:core-ktx:1.9.0'
-
-    def dagger_version = '2.44.2'
-    implementation "com.google.dagger:dagger:$dagger_version"
-    kapt "com.google.dagger:dagger-compiler:$dagger_version"
 
     testImplementation 'junit:junit:4.13.2'
     androidTestImplementation 'androidx.test.ext:junit:1.1.5'

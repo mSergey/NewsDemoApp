@@ -11,7 +11,8 @@ import dagger.Module
 import dagger.Provides
 import javax.inject.Singleton
 
-private const val DATABASE_NAME = "NewsDatabase"
+private const val NEWS_DATABASE = "news_database"
+
 @Module
 interface LocalDataSourceModule {
     companion object {
@@ -19,7 +20,7 @@ interface LocalDataSourceModule {
         @Singleton
         fun provideDatabase(context: Context): NewsDatabase {
             return Room
-                .databaseBuilder(context, NewsDatabase::class.java, DATABASE_NAME)
+                .databaseBuilder(context, NewsDatabase::class.java, NEWS_DATABASE)
                 .build()
         }
 
