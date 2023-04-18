@@ -19,7 +19,7 @@ data class NewsEntity(
     @ColumnInfo(name = "description")
     val description: String,
     @ColumnInfo(name = "url")
-    val url: String?,
+    val url: String,
     @ColumnInfo(name = "url_to_image")
     val urlToImage: String,
     @ColumnInfo(name = "published_at")

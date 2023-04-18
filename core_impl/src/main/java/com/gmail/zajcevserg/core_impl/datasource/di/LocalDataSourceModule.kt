@@ -4,6 +4,7 @@ import android.content.Context
 import androidx.room.Room
 import com.gmail.zajcevserg.core_api.datasource.local.NewsLocalDataSource
 import com.gmail.zajcevserg.core_impl.datasource.local.NewsLocalDataSourceImpl
+import com.gmail.zajcevserg.core_impl.datasource.local.database.FavoritesDao
 import com.gmail.zajcevserg.core_impl.datasource.local.database.NewsDao
 import com.gmail.zajcevserg.core_impl.datasource.local.database.NewsDatabase
 import dagger.Binds
@@ -27,6 +28,11 @@ interface LocalDataSourceModule {
         @Provides
         fun provideNewsDao(database: NewsDatabase): NewsDao {
             return database.newsDao
+        }
+
+        @Provides
+        fun provideFavoritesDao(database: NewsDatabase): FavoritesDao {
+            return database.favoritesDao
         }
 
     }

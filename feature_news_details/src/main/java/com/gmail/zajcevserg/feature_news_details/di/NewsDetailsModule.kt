@@ -3,7 +3,7 @@ package com.gmail.zajcevserg.feature_news_details.di
 import com.gmail.zajcevserg.feature_news_details.data.NewsDetailsRepository
 import com.gmail.zajcevserg.feature_news_details.data.NewsDetailsRepositoryImpl
 import com.gmail.zajcevserg.feature_news_details.impl.NewsDetailsImpl
-import com.gmail.zajcevserg.feature_news_details.presentation.NewsDetailsUiState
+import com.gmail.zajcevserg.feature_news_details.presentation.DetailsUiState
 import com.gmail.zajcevserg.feature_news_details_api.NewsDetailsApi
 import dagger.Binds
 import dagger.Module
@@ -15,9 +15,9 @@ interface NewsDetailsModule {
 
     companion object {
         @Provides
-        fun provideUiStateFlow(): MutableStateFlow<NewsDetailsUiState> {
+        fun provideUiStateFlow(): MutableStateFlow<DetailsUiState> {
             return MutableStateFlow(
-                value = NewsDetailsUiState.createEmptyState()
+                value = DetailsUiState.createEmptyState()
             )
         }
     }

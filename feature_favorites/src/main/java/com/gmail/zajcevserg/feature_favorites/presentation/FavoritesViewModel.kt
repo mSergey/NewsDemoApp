@@ -1,18 +1,42 @@
 package com.gmail.zajcevserg.feature_favorites.presentation
 
-import androidx.compose.runtime.MutableState
-import androidx.compose.runtime.State
-import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
+import com.gmail.zajcevserg.feature_favorites.domain.FavoritesRepository
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.distinctUntilChanged
+import kotlinx.coroutines.launch
 
-class FavoritesViewModel : ViewModel() {
-    private var _counter: MutableState<Int> = mutableStateOf(0)
+class FavoritesViewModel(
+    private val repository: FavoritesRepository,
+    private val uiState: MutableStateFlow<FavoritesUiState>
+) : ViewModel() {
 
-    val counter: State<Int>
-        get() = _counter
+    fun observeUiState(): StateFlow<FavoritesUiState> {
+        return uiState
+    }
 
-    fun increment() {
-        _counter.value++
+    fun sendAction(action: FavoritesAction) {
+        when (action) {
+            is FavoritesAction.ActionGet ->
+                viewModelScope.launch {
+                    repository.getFavoritesArticles()
+                        .distinctUntilChanged()
+                        .collect {
+                            uiState.emit(
+                                value = FavoritesUiState(
+                                    favoritesArticles = it,
+                                    isInitial = false
+                                )
+                            )
+                        }
+            }
+            is FavoritesAction.ActionDelete ->
+                viewModelScope.launch {
+                    repository.deleteArticleById(action.id)
+                }
+        }
     }
 }
 

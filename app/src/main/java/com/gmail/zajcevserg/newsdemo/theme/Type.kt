@@ -10,18 +10,17 @@ import com.gmail.zajcevserg.newsdemo.R
 // Set of Material typography styles to start with
 val Typography = Typography(
 
-    titleLarge = TextStyle(
+    /*titleLarge = TextStyle(
         fontFamily = FontFamily(Font(R.font.roboto_black)),
         fontSize = 22.sp,
         lineHeight = 28.sp,
         letterSpacing = 0.sp
-
     ),
 
     bodyMedium = TextStyle(
         fontFamily = FontFamily(Font(R.font.roboto_regular)),
         lineHeight = 20.sp,
         letterSpacing = 0.2.sp
-    )
+    )*/
 
 )

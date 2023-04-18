@@ -1,16 +1,20 @@
 package com.gmail.zajcevserg.feature_news.impl
 
+import androidx.compose.animation.AnimatedContentTransitionScope
+import androidx.compose.animation.ExperimentalAnimationApi
+import androidx.compose.animation.fadeIn
+import androidx.compose.animation.fadeOut
 import androidx.compose.ui.Modifier
 import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavHostController
-import androidx.navigation.compose.composable
-import androidx.navigation.navigation
 import com.gmail.zajcevserg.feature_news.R
 import com.gmail.zajcevserg.feature_news.presentation.NewsListScreen
 import com.gmail.zajcevserg.feature_news.presentation.NewsListViewModelFactory
 import com.gmail.zajcevserg.feature_news_api.NewsApi
 import com.gmail.zajcevserg.feature_news_details_api.NewsDetailsApi
+import com.google.accompanist.navigation.animation.composable
+import com.google.accompanist.navigation.animation.navigation
 import javax.inject.Inject
 
 
@@ -53,17 +57,46 @@ class NewsImpl @Inject constructor(
         return "news/"
     }
 
+    @OptIn(ExperimentalAnimationApi::class)
     override fun registerInBottomNavGraph(
         navGraphBuilder: NavGraphBuilder,
         navController: NavHostController
     ) {
-
         navGraphBuilder.navigation(
             route = bottomNavGraphRoute(),
-            startDestination = bottomNavGraphRoute() + featureRoute()
+            startDestination = bottomNavGraphRoute() + featureRoute(),
         ) {
 
-            composable(bottomNavGraphRoute() + featureRoute()) {
+            composable(
+                route = bottomNavGraphRoute() + featureRoute(),
+                enterTransition = {
+                    val isTransitionInsideSubgraph =
+                        initialState.destination.route!!.startsWith(
+                            prefix = bottomNavGraphRoute()
+                        )
+                    if (isTransitionInsideSubgraph) {
+                        fadeIn()
+                    } else {
+                        slideIntoContainer(
+                            towards = AnimatedContentTransitionScope.SlideDirection.Right,
+                        )
+                    }
+                },
+                exitTransition = {
+                    val isTransitionInsideSubgraph =
+                        targetState.destination.route!!.startsWith(
+                            prefix = bottomNavGraphRoute()
+                        )
+                    if (isTransitionInsideSubgraph) {
+                        fadeOut()
+                    } else {
+                        slideOutOfContainer(
+                            towards = AnimatedContentTransitionScope.SlideDirection.Left,
+                        )
+                    }
+                }
+            ) {
+
                 NewsListScreen(
                     viewModelFactory = viewModelFactory,
                     onItemClickHandler = {

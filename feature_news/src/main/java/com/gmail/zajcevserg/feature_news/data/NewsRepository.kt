@@ -5,4 +5,5 @@ import kotlinx.coroutines.flow.Flow
 
 interface NewsRepository {
     fun observeNewsResponse(): Flow<NewsUiResponse>
+
 }

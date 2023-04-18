@@ -1,5 +1,6 @@
 package com.gmail.zajcevserg.core_api.navigation
 
+import androidx.compose.ui.Modifier
 import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavHostController
@@ -13,8 +14,8 @@ interface BottomNavigationApi : BaseNavigationApi {
     fun bottomBarIconRes(): Int
     fun bottomBarTitleRes(): Int
     fun onBottomNavItemClicked(
-    navHostController: NavHostController,
-    currentBottomNavGraphRoute: String
+        navHostController: NavHostController,
+        currentBottomNavGraphRoute: String
     ) {
         val currentRoute = navHostController.currentDestination?.route!!
         val startGraphRoute = navHostController.graph.findStartDestination().route!!
