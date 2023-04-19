@@ -24,6 +24,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
@@ -64,7 +65,7 @@ fun NewsListScreen(
         }
     }
 
-    if (!uiState.isInitial)
+    if (uiState.isInitial) return
     Scaffold(
         snackbarHost = {
             SnackbarHost(hostState = snackBarHostState) {
@@ -84,6 +85,7 @@ fun NewsListScreen(
             ),
             modifier = Modifier
                 .fillMaxHeight()
+                .testTag("news_list_test_tag")
         ) {
             items(
                 items = uiState.articles,
@@ -96,7 +98,6 @@ fun NewsListScreen(
             }
         }
     }
-
 }
 
 @Composable

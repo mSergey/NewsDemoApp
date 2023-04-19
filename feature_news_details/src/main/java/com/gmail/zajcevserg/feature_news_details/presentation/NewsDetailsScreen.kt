@@ -2,7 +2,6 @@ package com.gmail.zajcevserg.feature_news_details.presentation
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
@@ -27,6 +26,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
@@ -64,7 +64,10 @@ fun NewsDetailsScreen(
                         )
                     },
                     navigationIcon = {
-                        IconButton(onClick = { onBackClickHandler.invoke() }) {
+                        IconButton(
+                            onClick = { onBackClickHandler.invoke() },
+                            modifier = Modifier.testTag("back_button_test_tag")
+                        ) {
                             Icon(
                                 imageVector = Icons.Filled.ArrowBack,
                                 contentDescription = null
@@ -74,6 +77,8 @@ fun NewsDetailsScreen(
                     actions = {
                         IconButton(
                             onClick = { vm.sendAction(DetailsAction.ActionFavoritesButtonPressed) },
+                            modifier = Modifier.testTag("add_to_favorites_icon_test_tag")
+
                         ) {
                             val icon = if (uiState.isInFavorites) {
                                 Icons.Filled.Favorite
@@ -83,7 +88,7 @@ fun NewsDetailsScreen(
                             Icon(
                                 imageVector = icon,
                                 tint = Color.Red,
-                                contentDescription = null,
+                                contentDescription = null
                             )
                         }
                     },

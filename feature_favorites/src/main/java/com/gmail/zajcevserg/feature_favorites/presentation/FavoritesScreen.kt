@@ -33,6 +33,7 @@ import androidx.compose.ui.draw.blur
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
@@ -71,6 +72,7 @@ fun FavoritesScreen(
         ),
         modifier = Modifier
             .fillMaxHeight()
+            .testTag("favorites_list_test_tag")
     ) {
         items(
             items = uiState.favoritesArticles,

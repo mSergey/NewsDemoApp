@@ -7,6 +7,7 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.navigation.NavHostController
@@ -29,7 +30,9 @@ fun BottomNavItem(
                 currentBottomNavGraphRoute = currentBottomNavGraphRoute
             )
         },
-        modifier = Modifier.navigationBarsPadding()
+        modifier = Modifier
+            .navigationBarsPadding()
+            .testTag("bottom_navigation_bar_${bottomBarFeatureApi.bottomNavGraphRoute()}_test_tag")
     )
 }
 
