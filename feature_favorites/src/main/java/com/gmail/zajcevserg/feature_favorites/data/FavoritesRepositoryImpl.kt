@@ -2,7 +2,6 @@ package com.gmail.zajcevserg.feature_favorites.data
 
 import com.gmail.zajcevserg.core_api.datasource.local.NewsLocalDataSource
 import com.gmail.zajcevserg.feature_favorites.domain.FavoritesArticleUiModel
-import com.gmail.zajcevserg.feature_favorites.domain.FavoritesRepository
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 import javax.inject.Inject

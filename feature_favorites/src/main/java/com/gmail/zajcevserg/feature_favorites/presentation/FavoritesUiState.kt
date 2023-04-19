@@ -1,6 +1,7 @@
 package com.gmail.zajcevserg.feature_favorites.presentation
 
 import com.gmail.zajcevserg.feature_favorites.domain.FavoritesArticleUiModel
+
 data class FavoritesUiState(
     val favoritesArticles: List<FavoritesArticleUiModel>,
     val isInitial: Boolean

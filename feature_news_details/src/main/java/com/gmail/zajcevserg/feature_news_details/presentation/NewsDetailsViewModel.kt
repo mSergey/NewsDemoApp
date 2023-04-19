@@ -1,7 +1,6 @@
 package com.gmail.zajcevserg.feature_news_details.presentation
 
 
-import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope

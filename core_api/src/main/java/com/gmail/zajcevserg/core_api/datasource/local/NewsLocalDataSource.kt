@@ -1,7 +1,6 @@
 package com.gmail.zajcevserg.core_api.datasource.local
 
 import kotlinx.coroutines.flow.Flow
-import java.nio.file.LinkOption
 
 interface NewsLocalDataSource {
     suspend fun getNews(): Flow<List<NewsEntity>>

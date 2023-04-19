@@ -1,25 +1,20 @@
 package com.gmail.zajcevserg.feature_news_details.impl
 
-import android.util.Log
+//import androidx.navigation.compose.composable
+
 import androidx.compose.animation.AnimatedContentTransitionScope
-import com.google.accompanist.navigation.animation.composable
-import com.google.accompanist.navigation.animation.navigation
 import androidx.compose.animation.ExperimentalAnimationApi
-import androidx.compose.animation.core.tween
 import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
-import androidx.compose.animation.slideInHorizontally
-import androidx.compose.animation.slideOutHorizontally
 import androidx.compose.ui.Modifier
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavHostController
 import androidx.navigation.NavType
-//import androidx.navigation.compose.composable
 import androidx.navigation.navArgument
 import com.gmail.zajcevserg.feature_news_details.presentation.NewsDetailsScreen
 import com.gmail.zajcevserg.feature_news_details.presentation.NewsDetailsViewModelFactory
 import com.gmail.zajcevserg.feature_news_details_api.NewsDetailsApi
-
+import com.google.accompanist.navigation.animation.composable
 import javax.inject.Inject
 
 private const val ARG_NAME = "details_id"

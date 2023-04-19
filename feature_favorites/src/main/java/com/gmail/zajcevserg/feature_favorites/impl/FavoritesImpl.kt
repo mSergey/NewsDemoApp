@@ -2,15 +2,14 @@ package com.gmail.zajcevserg.feature_favorites.impl
 
 import androidx.compose.animation.AnimatedContentTransitionScope
 import androidx.compose.animation.ExperimentalAnimationApi
-import androidx.compose.ui.Modifier
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavHostController
-import com.google.accompanist.navigation.animation.composable
-import com.google.accompanist.navigation.animation.navigation
 import com.gmail.zajcevserg.feature_favorites.R
 import com.gmail.zajcevserg.feature_favorites.presentation.FavoritesScreen
 import com.gmail.zajcevserg.feature_favorites.presentation.FavoritesViewModelFactory
 import com.gmail.zajcevserg.feature_favorites_api.FavoritesApi
+import com.google.accompanist.navigation.animation.composable
+import com.google.accompanist.navigation.animation.navigation
 import javax.inject.Inject
 
 class FavoritesImpl @Inject constructor(

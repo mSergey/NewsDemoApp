@@ -1,7 +1,7 @@
 package com.gmail.zajcevserg.feature_favorites.presentation
 
 import app.cash.turbine.test
-import com.gmail.zajcevserg.feature_favorites.domain.FavoritesRepository
+import com.gmail.zajcevserg.feature_favorites.data.FavoritesRepository
 import com.gmail.zajcevserg.feature_favorites.testutils.TestUtils
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi

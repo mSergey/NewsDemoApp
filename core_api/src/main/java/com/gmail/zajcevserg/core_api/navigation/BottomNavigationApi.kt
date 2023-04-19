@@ -1,6 +1,5 @@
 package com.gmail.zajcevserg.core_api.navigation
 
-import androidx.compose.ui.Modifier
 import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavHostController

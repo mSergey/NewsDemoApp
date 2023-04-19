@@ -2,7 +2,7 @@ package com.gmail.zajcevserg.feature_favorites.presentation
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.gmail.zajcevserg.feature_favorites.domain.FavoritesRepository
+import com.gmail.zajcevserg.feature_favorites.data.FavoritesRepository
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.distinctUntilChanged

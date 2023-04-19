@@ -1,6 +1,5 @@
 package com.gmail.zajcevserg.feature_news.data
 
-import android.util.Log
 import com.gmail.zajcevserg.core_api.datasource.local.NewsEntity
 import com.gmail.zajcevserg.core_api.datasource.local.NewsLocalDataSource
 import com.gmail.zajcevserg.core_api.datasource.remote.NewsRemoteDataSource
@@ -8,7 +7,6 @@ import com.gmail.zajcevserg.core_api.datasource.remote.dto.NewsNetworkResult
 import com.gmail.zajcevserg.feature_news.domain.ArticleUiModel
 import com.gmail.zajcevserg.feature_news.domain.NewsUiResponse
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.channelFlow
 import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.map

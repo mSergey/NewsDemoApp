@@ -3,7 +3,6 @@ package com.gmail.zajcevserg.core_api.datasource.local
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
-import com.google.gson.annotations.SerializedName
 
 @Entity(tableName = "news_cache_table")
 data class NewsEntity(

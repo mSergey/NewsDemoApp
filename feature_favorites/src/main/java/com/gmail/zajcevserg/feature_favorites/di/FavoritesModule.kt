@@ -1,11 +1,10 @@
 package com.gmail.zajcevserg.feature_favorites.di
 
 import com.gmail.zajcevserg.feature_favorites.data.FavoritesRepositoryImpl
-import com.gmail.zajcevserg.feature_favorites.domain.FavoritesRepository
+import com.gmail.zajcevserg.feature_favorites.data.FavoritesRepository
 import com.gmail.zajcevserg.feature_favorites.impl.FavoritesImpl
 import com.gmail.zajcevserg.feature_favorites.presentation.FavoritesUiState
 import com.gmail.zajcevserg.feature_favorites_api.FavoritesApi
-import com.gmail.zajcevserg.feature_news_api.NewsApi
 import dagger.Binds
 import dagger.Module
 import dagger.Provides

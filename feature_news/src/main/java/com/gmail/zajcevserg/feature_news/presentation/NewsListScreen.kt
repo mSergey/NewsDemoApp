@@ -1,13 +1,18 @@
 package com.gmail.zajcevserg.feature_news.presentation
 
+import android.content.res.Configuration
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.LazyListState
+import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material3.ElevatedCard
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
@@ -24,9 +29,11 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import coil.compose.AsyncImage
@@ -65,6 +72,8 @@ fun NewsListScreen(
         }
     }
 
+    val lazyListState = rememberLazyListState()
+
     if (uiState.isInitial) return
     Scaffold(
         snackbarHost = {
@@ -75,25 +84,22 @@ fun NewsListScreen(
             }
         }
     ) { contentPaddings ->
-        LazyColumn(
-            verticalArrangement = Arrangement.spacedBy(16.dp),
-            contentPadding = PaddingValues(
-                start = 16.dp,
-                top = contentPaddings.calculateTopPadding() + 16.dp ,
-                end = 16.dp,
-                bottom = contentPaddings.calculateBottomPadding() + 16.dp
-            ),
-            modifier = Modifier
-                .fillMaxHeight()
-                .testTag("news_list_test_tag")
-        ) {
-            items(
-                items = uiState.articles,
-                key = { it.id }
-            ) {articleUiModel: ArticleUiModel ->
-                Article(
-                    articleModel = articleUiModel,
-                    onItemClickHandler = onItemClickHandler
+        val configuration = LocalConfiguration.current
+        when (configuration.orientation) {
+            Configuration.ORIENTATION_PORTRAIT -> {
+                NewsListPortrait(
+                    uiState = uiState,
+                    contentPaddings = contentPaddings,
+                    onItemClickHandler = onItemClickHandler,
+                    lazyListState = lazyListState
+                )
+            }
+            else -> {
+                NewsListLandscape(
+                    uiState = uiState,
+                    contentPaddings = contentPaddings,
+                    onItemClickHandler = onItemClickHandler,
+                    lazyListState = lazyListState
                 )
             }
         }
@@ -101,7 +107,71 @@ fun NewsListScreen(
 }
 
 @Composable
-fun Article(
+fun NewsListPortrait(
+    uiState: NewsListUiState,
+    contentPaddings: PaddingValues,
+    onItemClickHandler: (idArg: Long) -> Unit,
+    lazyListState: LazyListState
+) {
+    LazyColumn(
+        state = lazyListState,
+        verticalArrangement = Arrangement.spacedBy(16.dp),
+        contentPadding = PaddingValues(
+            start = 16.dp,
+            top = contentPaddings.calculateTopPadding() + 16.dp ,
+            end = 16.dp,
+            bottom = contentPaddings.calculateBottomPadding() + 16.dp
+        ),
+        modifier = Modifier
+            .fillMaxHeight()
+            .testTag("news_list_test_tag")
+    ) {
+        items(
+            items = uiState.articles,
+            key = { it.id }
+        ) {articleUiModel: ArticleUiModel ->
+            ArticlePortrait(
+                articleModel = articleUiModel,
+                onItemClickHandler = onItemClickHandler
+            )
+        }
+    }
+}
+
+@Composable
+fun NewsListLandscape(
+    uiState: NewsListUiState,
+    contentPaddings: PaddingValues,
+    onItemClickHandler: (idArg: Long) -> Unit,
+    lazyListState: LazyListState
+) {
+    LazyRow(
+        state = lazyListState,
+        horizontalArrangement = Arrangement.spacedBy(16.dp),
+        contentPadding = PaddingValues(
+            start = 16.dp,
+            top = contentPaddings.calculateTopPadding() + 16.dp ,
+            end = 16.dp,
+            bottom = contentPaddings.calculateBottomPadding() + 16.dp
+        ),
+        modifier = Modifier
+            .fillMaxHeight()
+            .testTag("news_list_test_tag")
+    ) {
+        items(
+            items = uiState.articles,
+            key = { it.id }
+        ) {articleUiModel: ArticleUiModel ->
+            ArticleLandscape(
+                articleModel = articleUiModel,
+                onItemClickHandler = onItemClickHandler
+            )
+        }
+    }
+}
+
+@Composable
+fun ArticlePortrait(
     articleModel: ArticleUiModel,
     onItemClickHandler: (idArg: Long) -> Unit
 ) {
@@ -133,6 +203,49 @@ fun Article(
             modifier = Modifier
                 .align(Alignment.End)
                 .padding(16.dp)
+        )
+    }
+}
+
+@Composable
+fun ArticleLandscape(
+    articleModel: ArticleUiModel,
+    onItemClickHandler: (idArg: Long) -> Unit
+) {
+    ElevatedCard(
+        modifier = Modifier
+            .clickable { onItemClickHandler.invoke(articleModel.id) }
+            .width(320.dp)
+            .fillMaxHeight()
+    ) {
+        AsyncImage(
+            model = articleModel.urlToImage,
+            contentDescription = null,
+            contentScale = ContentScale.Crop,
+            modifier = Modifier
+                .fillMaxWidth()
+                .fillMaxHeight(0.5f)
+        )
+
+        Text(
+            text = articleModel.title,
+            overflow = TextOverflow.Ellipsis,
+            style = MaterialTheme.typography.titleLarge,
+            fontWeight = FontWeight.Black,
+            modifier = Modifier
+                .padding(horizontal = 16.dp)
+                .padding(top = 16.dp)
+                .weight(0.3f)
+        )
+
+        Text(
+            text = "Source: ${articleModel.sourceName}",
+            style = MaterialTheme.typography.bodyLarge,
+            fontStyle = FontStyle.Italic,
+            modifier = Modifier
+                .align(Alignment.End)
+                .padding(16.dp)
+                .weight(0.2f)
         )
     }
 }
