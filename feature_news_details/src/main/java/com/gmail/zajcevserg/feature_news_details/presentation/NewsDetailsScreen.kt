@@ -1,7 +1,11 @@
 package com.gmail.zajcevserg.feature_news_details.presentation
 
+import android.content.res.Configuration
+import androidx.compose.foundation.ScrollState
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
@@ -11,6 +15,7 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material.icons.filled.Favorite
 import androidx.compose.material.icons.filled.FavoriteBorder
+import androidx.compose.material3.Divider
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
@@ -26,6 +31,8 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight
@@ -53,6 +60,7 @@ fun NewsDetailsScreen(
     }
 
     if (!uiState.isInitial) {
+
         val contentScrollState = rememberScrollState()
         Scaffold(
             topBar = {
@@ -96,68 +104,174 @@ fun NewsDetailsScreen(
                 )
             }
         ) { contentPadding ->
-            Column(
-                verticalArrangement = Arrangement.spacedBy(16.dp),
-                modifier = Modifier
-                    .fillMaxHeight()
-                    .padding(contentPadding)
-                    .verticalScroll(contentScrollState)
-            ) {
-                AsyncImage(
-                    model = uiState.detailsUiModel.urlToImage,
-                    contentDescription = null,
-                    modifier = Modifier.fillMaxWidth()
-                )
-                Text(
-                    text = uiState.detailsUiModel.title,
-                    style = MaterialTheme.typography.displaySmall,
-                    fontWeight = FontWeight.Black,
-                    modifier = Modifier
-                        .padding(horizontal = 16.dp)
-                )
-                Text(
-                    text = uiState.detailsUiModel.description,
-                    style = MaterialTheme.typography.bodyLarge,
-                    fontWeight = FontWeight.Bold,
-                    modifier = Modifier
-                        .padding(horizontal = 16.dp)
-                )
-
-                Text(
-                    text = uiState.detailsUiModel.source,
-                    style = MaterialTheme.typography.titleLarge,
-                    modifier = Modifier
-                        .padding(horizontal = 16.dp)
-                )
-
-                Text(
-                    text = uiState.detailsUiModel.publishedAt.toFormattedDate() ?: "No date",
-                    fontStyle = FontStyle.Italic,
-                    modifier = Modifier
-                        .padding(horizontal = 16.dp)
-                        .align(alignment = Alignment.End)
-                )
-
-                Text(
-                    text = uiState.detailsUiModel.content,
-                    style = MaterialTheme.typography.bodyLarge,
-                    modifier = Modifier
-                        .padding(horizontal = 16.dp)
-                )
-                Text(
-                    text = uiState.detailsUiModel.author,
-                    fontStyle = FontStyle.Italic,
-                    modifier = Modifier
-                        .align(Alignment.End)
-                        .padding(horizontal = 16.dp)
-                        .padding(bottom = 16.dp)
-                )
+            val configuration = LocalConfiguration.current
+            when (configuration.orientation) {
+                Configuration.ORIENTATION_PORTRAIT -> {
+                    DetailsPortrait(
+                        contentPadding = contentPadding,
+                        contentScrollState = contentScrollState,
+                        uiState = uiState
+                    )
+                }
+                else -> {
+                    DetailsLandscape(
+                        contentPadding = contentPadding,
+                        contentScrollState = contentScrollState,
+                        uiState = uiState
+                    )
+                }
             }
+        }
+    }
+}
+
+
+
+
+@Composable
+fun DetailsPortrait(
+    contentPadding: PaddingValues,
+    contentScrollState: ScrollState,
+    uiState: DetailsUiState
+) {
+    Column(
+        verticalArrangement = Arrangement.spacedBy(16.dp),
+        modifier = Modifier
+            .fillMaxHeight()
+            .padding(contentPadding)
+            .verticalScroll(contentScrollState)
+    ) {
+        AsyncImage(
+            model = uiState.detailsUiModel.urlToImage,
+            contentDescription = null,
+            modifier = Modifier.fillMaxWidth()
+        )
+        Text(
+            text = uiState.detailsUiModel.title,
+            style = MaterialTheme.typography.displaySmall,
+            fontWeight = FontWeight.Black,
+            modifier = Modifier
+                .padding(horizontal = 16.dp)
+        )
+        Text(
+            text = uiState.detailsUiModel.description,
+            style = MaterialTheme.typography.bodyLarge,
+            fontWeight = FontWeight.Bold,
+            modifier = Modifier
+                .padding(horizontal = 16.dp)
+        )
+
+        Text(
+            text = uiState.detailsUiModel.source,
+            style = MaterialTheme.typography.titleLarge,
+            modifier = Modifier
+                .padding(horizontal = 16.dp)
+        )
+
+        Text(
+            text = uiState.detailsUiModel.publishedAt.toFormattedDate() ?: "No date",
+            fontStyle = FontStyle.Italic,
+            modifier = Modifier
+                .padding(horizontal = 16.dp)
+                .align(alignment = Alignment.End)
+        )
+
+        Text(
+            text = uiState.detailsUiModel.content,
+            style = MaterialTheme.typography.bodyLarge,
+            modifier = Modifier
+                .padding(horizontal = 16.dp)
+        )
+        Text(
+            text = uiState.detailsUiModel.author,
+            fontStyle = FontStyle.Italic,
+            modifier = Modifier
+                .align(Alignment.End)
+                .padding(horizontal = 16.dp)
+                .padding(bottom = 16.dp)
+        )
+    }
+}
+
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+fun DetailsLandscape(
+    contentPadding: PaddingValues,
+    contentScrollState: ScrollState,
+    uiState: DetailsUiState
+) {
+    Row {
+        AsyncImage(
+            model = uiState.detailsUiModel.urlToImage,
+            contentDescription = null,
+            contentScale = ContentScale.Crop,
+            modifier = Modifier
+                .fillMaxHeight()
+                .weight(0.4f)
+                .padding(contentPadding)
+        )
+        Divider(
+            modifier = Modifier
+                .fillMaxHeight()
+                .weight(0.01f)
+                .padding(contentPadding)
+        )
+        Column(
+            verticalArrangement = Arrangement.spacedBy(16.dp),
+            modifier = Modifier
+                .fillMaxHeight()
+                .weight(0.6f)
+                .padding(contentPadding)
+                .verticalScroll(contentScrollState)
+        ) {
+            Text(
+                text = uiState.detailsUiModel.title,
+                style = MaterialTheme.typography.displaySmall,
+                fontWeight = FontWeight.Black,
+                modifier = Modifier
+                    .padding(horizontal = 16.dp)
+            )
+            Text(
+                text = uiState.detailsUiModel.description,
+                style = MaterialTheme.typography.bodyLarge,
+                fontWeight = FontWeight.Bold,
+                modifier = Modifier
+                    .padding(horizontal = 16.dp)
+            )
+
+            Text(
+                text = uiState.detailsUiModel.source,
+                style = MaterialTheme.typography.titleLarge,
+                modifier = Modifier
+                    .padding(horizontal = 16.dp)
+            )
+
+            Text(
+                text = uiState.detailsUiModel.publishedAt.toFormattedDate() ?: "No date",
+                fontStyle = FontStyle.Italic,
+                modifier = Modifier
+                    .padding(horizontal = 16.dp)
+                    .align(alignment = Alignment.End)
+            )
+
+            Text(
+                text = uiState.detailsUiModel.content,
+                style = MaterialTheme.typography.bodyLarge,
+                modifier = Modifier
+                    .padding(horizontal = 16.dp)
+            )
+            Text(
+                text = uiState.detailsUiModel.author,
+                fontStyle = FontStyle.Italic,
+                modifier = Modifier
+                    .align(Alignment.End)
+                    .padding(horizontal = 16.dp)
+                    .padding(bottom = 16.dp)
+            )
         }
 
     }
 }
-
 private fun String.toFormattedDate(): String? {
     val inputStringPattern = "yyyy-MM-dd'T'HH:mm:ss"
     val outputStringPattern = "yyyy, d MMM"
